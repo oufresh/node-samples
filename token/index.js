@@ -1,7 +1,8 @@
-var express = require("express");
-//var secret = require( 'secret' );
+const express = require('express');
+const uuid = require('uuid/v4')
+const session = require('express-session')
+const FileStore = require('session-file-store')(session);
 var cookieParser = require('cookie-parser')
-var uuid = require("uuid");
 
 var app = express();
 app.use(cookieParser());
@@ -82,3 +83,5 @@ app.use(function (req, res, next) {
   next(); // <-- important!
 });
  */
+
+ //https://github.com/jshttp/basic-auth#readme
