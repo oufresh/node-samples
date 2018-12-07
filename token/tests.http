@@ -1,0 +1,8 @@
+### Test token reponse
+GET http://localhost:5000/token
+
+### Test cookie response 
+GET http://localhost:5000/cookie
+
+### Test apt with cookie
+GET http://localhost:5000/api/test
