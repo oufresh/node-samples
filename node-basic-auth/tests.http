@@ -1,0 +1,15 @@
+### Test hello
+GET http://localhost:4000/hello
+
+### Test authenticate test:test encoded
+POST http://localhost:4000/users/authenticate
+Content-Type: application/json
+
+{
+    "username": "test",
+    "password": "test"
+}
+
+### Test getAll authenticated test:test base64 encoded
+GET http://localhost:4000/users/
+Authorization: Basic dGVzdDp0ZXN0
