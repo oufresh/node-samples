@@ -1,0 +1,7 @@
+{
+  "realm": "veis_test",
+  "auth-server-url": "http://localhost:3000/auth",
+  "resource": "my-react-client",
+  "ssl-required" : "external",
+  "public-client" : true
+}

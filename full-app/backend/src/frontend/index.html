@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test page</title>
+    <script>
+      function prova() {
+        fetch("api/element/1").then(r => r.json()).then(d => console.log(d)).catch(e => console.error(e));
+      }
+      function prova2() {
+        fetch("users").then(r => r.json()).then(d => console.log(d)).catch(e => console.error(e));
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Test api page</h1>
+    <button onclick="prova()">Prova</button>
+    <br />
+    <button onclick="prova2()">Prova2</button>
+  </body>
+</html>
