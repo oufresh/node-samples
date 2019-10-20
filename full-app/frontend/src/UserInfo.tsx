@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
-import { IKeyCloak } from './keycloak';
+import { loadUser } from "./user";
 
-export class UserInfo extends Component<{ keycloak: IKeyCloak }, { name: string, email: string, id: string}> {
+export class UserInfo extends Component<{ }, { name: string, email: string, id: string, login: string, error: boolean }> {
 
-  constructor(props: { keycloak: IKeyCloak }) {
+  constructor(props: { }) {
     super(props);
     this.state = {
       name: "",
       email: "",
-      id: ""
+      id: "",
+      login: "",
+      error: false
     };
-    this.props.keycloak.loadUserInfo().success((userInfo: any) => {
-        console.log(userInfo);
-        this.setState({name: userInfo.name, email: userInfo.email, id: userInfo.sub})
-    });
+  }
 
-    console.log("hasRealmRole ADM: ", this.props.keycloak.hasRealmRole("ADM"));
+  loadUser = async () => {
+    try {
+      const user = await loadUser("oufresh");
+      this.setState({
+        name: user.name,
+        email: user.email,
+        id: user.id,
+        login: user.login
+      });
+    } catch (e) {
+      console.error(e);
+      this.setState({ error: true });
+    }
+  }
+
+  componentDidMount() {
+    this.loadUser();
   }
 
   render() {
@@ -23,8 +38,8 @@ export class UserInfo extends Component<{ keycloak: IKeyCloak }, { name: string,
       <div className="UserInfo">
         <p>Name: {this.state.name}</p>
         <p>Email: {this.state.email}</p>
+        <p>Login: {this.state.login}</p>
         <p>ID: {this.state.id}</p>
-        <p>{this.props.keycloak.hasRealmRole("ADM") === true ? "App administrator" : "App visualizer"}</p>
       </div>
     );
   }

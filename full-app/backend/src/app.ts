@@ -28,7 +28,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
       req.headers.accept &&
       req.headers.accept.indexOf("application/json") === -1
     )
-      next(new Error("though lucky buddy!!"));
+      next(new Error("Though lucky buddy!!"));
     else next();
   }
 
@@ -48,24 +48,24 @@ app.use(
 app.use("/api", apiRouter);
 
 //home on prod use the static dir with client app
-//if (process.env.NODE_ENV === "production") {
-const frontendDir = process.env.FRONTEND
-  ? process.env.FRONTEND
-  : config.get<string>("frontend-directory");
+if (process.env.NODE_ENV === "production") {
+  const frontendDir = process.env.FRONTEND
+    ? process.env.FRONTEND
+    : config.get<string>("frontend-directory");
 
-console.log(
-  "Production Environment found - frontend directory: " + frontendDir
-);
+  console.log(
+    "Production Environment found - frontend directory: " + frontendDir
+  );
 
-// Serve static files for frontend
-app.use(express.static(path.join(__dirname, frontendDir)));
+  // Serve static files for frontend
+  app.use(express.static(path.join(__dirname, frontendDir)));
 
-// Handle React routing, return all requests to React app (ex using login and secured pages)
-app.get("*", (req: Request, res: Response) => {
-  //forse dovrò vedere che non si tratta di /api o /users ? no queste due vengono già intercettate dal middleware
-  //vediamo se accetta text/html
-  res.sendFile(path.join(__dirname, frontendDir, "index.html"));
-});
-//}
+  // Handle React routing, return all requests to React app (ex using login and secured pages)
+  app.get("*", (req: Request, res: Response) => {
+    //forse dovrò vedere che non si tratta di /api o /users ? no queste due vengono già intercettate dal middleware
+    //vediamo se accetta text/html
+    res.sendFile(path.join(__dirname, frontendDir, "index.html"));
+  });
+}
 
 export default app;
