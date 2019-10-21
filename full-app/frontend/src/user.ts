@@ -1,8 +1,22 @@
-export function loadUser(userName: string): Promise<any> {
+export function loadUser(userName: string, password: string): Promise<any> {
   const p = new Promise((res, rej) => {
-    fetch("users/" + userName)
+    debugger;
+    fetch("users/authenticate", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userName,
+        password
+      })
+    })
       .then(r => r.json())
-      .then(data => res(data))
+      .then(data => {
+        debugger;
+        res(data);
+      })
       .catch(e => rej(e));
   });
   return p;

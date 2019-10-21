@@ -1,14 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>Test page</title>
     <script>
-      function prova() {
-        fetch("api/element/1").then(r => r.json()).then(d => console.log(d)).catch(e => console.error(e));
-      }
-      function prova2() {
-        fetch("users").then(r => r.json()).then(d => console.log(d)).catch(e => console.error(e));
-      }
+          function prova() {
+            fetch("api/element/1").then(r => r.json()).then(d => console.log(d)).catch(e => console.error(e));
+          }
+          function prova2() {
+            fetch("hello").then(r => r.json()).then(d => console.log(d)).catch(e => console.error(e));
+          }
+          function authenticate() {
+            fetch("users/authenticate", {
+              method: "POST",
+              headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                username: "test",
+                password: "test"
+            })}).then(r => r.json()).then(data => console.log(data)).catch(e => console.error(e));
+          }
     </script>
   </head>
   <body>
@@ -16,5 +28,6 @@
     <button onclick="prova()">Prova</button>
     <br />
     <button onclick="prova2()">Prova2</button>
+    <button onclick="authenticate()">authenticate</button>
   </body>
 </html>

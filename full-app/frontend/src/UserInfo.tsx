@@ -16,7 +16,9 @@ export class UserInfo extends Component<{ }, { name: string, email: string, id: 
 
   loadUser = async () => {
     try {
-      const user = await loadUser("oufresh");
+      const user = await loadUser("test", "test");
+      console.log(user);
+      debugger;
       this.setState({
         name: user.name,
         email: user.email,

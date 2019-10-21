@@ -4,6 +4,7 @@ import express, { Request, Response, NextFunction } from "express";
 import httpProxy from "http-proxy-middleware";
 import path from "path";
 import { apiRouter } from "./api";
+import { IncomingMessage, ServerResponse, ClientRequest } from "http";
 
 // Create Express server
 const app = express();
@@ -17,10 +18,15 @@ const port = process.env.PORT ? process.env.PORT : config.get("port");
 app.set("port", port);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-  console.log("Time:", Date.now());
-  if (
+  console.groupCollapsed([
+    "Incoming request: time " + Date.now().toLocaleString()
+  ]);
+  console.log(req);
+  console.groupEnd();
+ /* if (
+    !req.headers.referer &&
     req.method === "GET" &&
-    (req.url.indexOf("/api") >= 0 || req.url.indexOf("/users") >= 0)
+    req.url.indexOf("/api") >= 0
   ) {
     if (!req.headers.accept) next(new Error("Missing accept!!"));
     if (
@@ -32,15 +38,29 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     else next();
   }
 
-  next();
+  next();*/
 });
 
-//services proxy
 app.use(
   "/users",
   httpProxy({
-    target: "https://api.github.com",
-    changeOrigin: true
+    target: "http://localhost:6000",
+    changeOrigin: true,
+    pathRewrite: { "^/users/authenticate": "/users/authenticate" },
+    onError: (err: Error, req: IncomingMessage, res: ServerResponse) => {
+      console.error(err);
+      console.error(req);
+      res.writeHead(500, {
+        "Content-Type": "text/plain"
+      });
+      res.end(
+        "Something went wrong. And we are reporting a custom error message."
+      );
+    },
+    onProxyReq: (proxyReq: ClientRequest) => {
+      console.log(proxyReq.getHeaders());
+      console.log(proxyReq.path);
+    }
   })
 );
 
@@ -66,6 +86,17 @@ if (process.env.NODE_ENV === "production") {
     //vediamo se accetta text/html
     res.sendFile(path.join(__dirname, frontendDir, "index.html"));
   });
+} else {
+  const frontendDir = process.env.FRONTEND
+    ? process.env.FRONTEND
+    : config.get<string>("frontend-directory");
+
+  console.log(
+    "Production Environment found - frontend directory: " + frontendDir
+  );
+
+  // Serve static files for frontend
+  app.use(express.static(path.join(__dirname, frontendDir)));
 }
 
 export default app;
