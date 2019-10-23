@@ -4,10 +4,24 @@
     <title>Test page</title>
     <script>
           function prova() {
-            fetch("api/element/1").then(r => r.json()).then(d => console.log(d)).catch(e => console.error(e));
+            document.getElementById("api-result").innerHTML = "";
+            fetch("api/element/1").then(r => r.json()).then(d => {
+              console.log(d);
+              document.getElementById("api-result").innerHTML = "Call api/element/1: OK";
+            }).catch(e => {
+              console.error(e);
+              document.getElementById("api-result").innerHTML = "Call api/element/1: KO";
+            });
           }
           function prova2() {
-            fetch("hello").then(r => r.json()).then(d => console.log(d)).catch(e => console.error(e));
+            document.getElementById("api-auth").innerHTML = "";
+            fetch("users/hello").then(r => r.json()).then(d => {
+              console.log(d);
+              document.getElementById("api-auth").innerHTML = "Call users/hello: OK";
+            }).catch(e => {
+              console.error(e);
+              document.getElementById("api-auth").innerHTML = "Call users/hello: KO";
+            });
           }
           function authenticate() {
             fetch("users/authenticate", {
@@ -21,13 +35,29 @@
                 password: "test"
             })}).then(r => r.json()).then(data => console.log(data)).catch(e => console.error(e));
           }
+          function verify() {
+            fetch("users/verify", {
+              headers: {
+                "Authorization": "Basic dGVzdDp0ZXN0"
+              }
+            }).then(r => r).then(data => console.log("Verify ok")).catch(e => console.error(e));
+          }
     </script>
   </head>
   <body>
     <h1>Test api page</h1>
-    <button onclick="prova()">Prova</button>
+    <fieldset>
+      <legend>Test internal api</legend>
+      <button onclick="prova()">Prova api/elements</button>
+      <p id="api-result"></p>
+    </fieldset>
     <br />
-    <button onclick="prova2()">Prova2</button>
-    <button onclick="authenticate()">authenticate</button>
+    <fieldset>
+      <legend>Test auth api through gateway</legend>
+      <button onclick="prova2()">Hello auth</button>
+      <button onclick="authenticate()">authenticate</button>
+      <button onclick="verify()">Verify user</button>
+      <p id="api-auth"></p>
+    </fieldset>
   </body>
 </html>

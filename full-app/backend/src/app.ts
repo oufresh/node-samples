@@ -9,44 +9,17 @@ import { IncomingMessage, ServerResponse, ClientRequest } from "http";
 // Create Express server
 const app = express();
 
-//add helmet default middleware
+//1. add helmet default middleware
 app.use(helmet());
 
-const port = process.env.PORT ? process.env.PORT : config.get("port");
-
-//default port or get from ENV
-app.set("port", port);
-
-app.use((req: Request, res: Response, next: NextFunction) => {
-  console.groupCollapsed([
-    "Incoming request: time " + Date.now().toLocaleString()
-  ]);
-  console.log(req);
-  console.groupEnd();
- /* if (
-    !req.headers.referer &&
-    req.method === "GET" &&
-    req.url.indexOf("/api") >= 0
-  ) {
-    if (!req.headers.accept) next(new Error("Missing accept!!"));
-    if (
-      !req.headers.referer &&
-      req.headers.accept &&
-      req.headers.accept.indexOf("application/json") === -1
-    )
-      next(new Error("Though lucky buddy!!"));
-    else next();
-  }
-
-  next();*/
-});
-
+//2. add middleware to proxy the authentication server
+// now all apis ... later only users/authenticate for the UI
 app.use(
   "/users",
   httpProxy({
     target: "http://localhost:6000",
     changeOrigin: true,
-    pathRewrite: { "^/users/authenticate": "/users/authenticate" },
+    //pathRewrite: { "^/users/authenticate": "/users/authenticate" },
     onError: (err: Error, req: IncomingMessage, res: ServerResponse) => {
       console.error(err);
       console.error(req);
@@ -64,7 +37,33 @@ app.use(
   })
 );
 
-//set backed api router
+//3. add check authentication middleware for interla apis
+app.use((req: Request, res: Response, next: NextFunction) => {
+  console.groupCollapsed([
+    "Incoming request: time " + Date.now().toLocaleString()
+  ]);
+  console.log(req);
+  console.groupEnd();
+  next();
+  /* if (
+    !req.headers.referer &&
+    req.method === "GET" &&
+    req.url.indexOf("/api") >= 0
+  ) {
+    if (!req.headers.accept) next(new Error("Missing accept!!"));
+    if (
+      !req.headers.referer &&
+      req.headers.accept &&
+      req.headers.accept.indexOf("application/json") === -1
+    )
+      next(new Error("Though lucky buddy!!"));
+    else next();
+  }
+
+  next();*/
+});
+
+//4. set internal api router or proxy to services
 app.use("/api", apiRouter);
 
 //home on prod use the static dir with client app
@@ -98,5 +97,10 @@ if (process.env.NODE_ENV === "production") {
   // Serve static files for frontend
   app.use(express.static(path.join(__dirname, frontendDir)));
 }
+
+const port = process.env.PORT ? process.env.PORT : config.get("port");
+
+//default port or get from ENV
+app.set("port", port);
 
 export default app;

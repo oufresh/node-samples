@@ -1,4 +1,6 @@
-export function errorHandler(err, req, res, next) {
+import { Request, Response, NextFunction } from "express";
+
+export function errorHandler(err: Error | string, req: Request, res: Response, next: NextFunction) {
     if (typeof (err) === 'string') {
         // custom application error
         return res.status(400).json({ message: err });

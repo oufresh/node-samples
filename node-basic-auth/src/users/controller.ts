@@ -11,8 +11,8 @@ router.get("/", getAll);
 router.get("/hello", hello);
 
 // hello
-function hello(req: Express.Request, res: Express.Response, next) {
-  res.status(200).json({ message: "Hello!" });
+function hello(req: Express.Request, res: Express.Response, next: Express.NextFunction) {
+  res.status(200).json({ message: "Hello from basic auth server!" });
 }
 
 async function authenticate(
@@ -20,35 +20,27 @@ async function authenticate(
   res: Express.Response,
   next: Express.NextFunction
 ) {
-  userService
-    .authenticate(req.body)
-    .then(user => {
-      user
-        ? res.json(user)
-        : res
-            .status(400)
-            .json({ message: "Username or password is incorrect" });
-    })
-    .catch(err => next(err));
+  try {
+    const user = await userService.authenticate(req.body);
+    if (user) res.json(user);
+    else res.status(400).json({ message: "Username or password is incorrect" });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 }
 
-function getAll(
+async function getAll(
   req: Express.Request,
   res: Express.Response,
   next: Express.NextFunction
 ) {
-  userService
-    .getAll()
-    .then(users => res.json(users))
-    .catch(err => next(err));
-}
-
-function verify(req: Express.Request, res: Express.Response) {
   const credentials = getCredentials(req);
   if (!credentials) {
     return res.status(401).json({ message: "Missing Authorization Header" });
   }
-  const user = userService.verify({
+
+  const user = await userService.verify({
     username: credentials.username,
     password: credentials.password
   });
@@ -58,5 +50,31 @@ function verify(req: Express.Request, res: Express.Response) {
       .json({ message: "Invalid Authentication Credentials" });
   }
 
-  res.status(200).send();
+  userService
+    .getAll()
+    .then(users => res.json(users))
+    .catch(err => next(err));
+}
+
+async function verify(req: Express.Request, res: Express.Response, next: Express.NextFunction) {
+  try {
+    const credentials = getCredentials(req);
+    if (!credentials) {
+      return res.status(401).json({ message: "Missing Authorization Header" });
+    }
+    const user = await userService.verify({
+      username: credentials.username,
+      password: credentials.password
+    });
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: "Invalid Authentication Credentials" });
+    }
+  
+    res.status(200).send();
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 }

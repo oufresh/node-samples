@@ -1,8 +1,8 @@
 ### Test hello
-GET http://localhost:4000/hello
+GET http://localhost:6000/users/hello
 
 ### Test authenticate test:test encoded
-POST http://localhost:4000/users/authenticate
+POST http://localhost:6000/users/authenticate
 Content-Type: application/json
 
 {
@@ -11,5 +11,9 @@ Content-Type: application/json
 }
 
 ### Test getAll authenticated test:test base64 encoded
-GET http://localhost:4000/users/
+GET http://localhost:6000/users/
+Authorization: Basic dGVzdDp0ZXN0
+
+### Test verify authdata
+GET http://localhost:6000/users/verify
 Authorization: Basic dGVzdDp0ZXN0

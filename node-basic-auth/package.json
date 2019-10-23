@@ -4,8 +4,8 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc && node copyAssets.js",
-    "dev": "ts-node ./src/server.ts",
+    "build": "tsc",
+    "dev": "nodemon ./src/server.ts",
     "start": "node ./dist/server.js",
     "prod": "npm run build && npm run start"
   },
@@ -19,9 +19,12 @@
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.1",
+    "@types/config": "^0.0.34",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.1",
+    "@types/helmet": "^0.0.44",
     "@types/node": "^12.11.1",
+    "nodemon": "^1.19.4",
     "shelljs": "^0.8.3",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.4"
