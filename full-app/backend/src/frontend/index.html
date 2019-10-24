@@ -7,10 +7,25 @@
             document.getElementById("api-result").innerHTML = "";
             fetch("api/element/1").then(r => r.json()).then(d => {
               console.log(d);
-              document.getElementById("api-result").innerHTML = "Call api/element/1: OK";
+              document.getElementById("api-result").innerHTML = "Call not auth api/element/1: OK";
             }).catch(e => {
               console.error(e);
-              document.getElementById("api-result").innerHTML = "Call api/element/1: KO";
+              document.getElementById("api-result").innerHTML = "Call not auth api/element/1: KO";
+            });
+          }
+          function provaAuth() {
+            document.getElementById("api-result-auth").innerHTML = "";
+            fetch("api/element/1", {
+              method: "GET",
+              headers: {
+                "Authorization": "Basic dGVzdDp0ZXN0"
+              }
+            }).then(r => r.json()).then(d => {
+              console.log(d);
+              document.getElementById("api-result-auth").innerHTML = "Call api/element/1: OK";
+            }).catch(e => {
+              console.error(e);
+              document.getElementById("api-result-auth").innerHTML = "Call api/element/1: KO";
             });
           }
           function prova2() {
@@ -50,6 +65,12 @@
       <legend>Test internal api</legend>
       <button onclick="prova()">Prova api/elements</button>
       <p id="api-result"></p>
+    </fieldset>
+    <br />
+    <fieldset>
+      <legend>Test internal api auth</legend>
+      <button onclick="provaAuth()">Prova authapi/elements</button>
+      <p id="api-result-auth"></p>
     </fieldset>
     <br />
     <fieldset>

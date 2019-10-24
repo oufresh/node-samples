@@ -1,4 +1,14 @@
 {
     "port": 4000,
-    "frontend-directory": "frontend"
+    "debug": true, 
+    "frontend-directory": "frontend",
+    "authentication": {
+        "type": "Basic",
+        "server": {
+            "host": "localhost",
+            "port": 6000,
+            "base-path": "/users",
+            "protocol": "http"
+        }
+    }
 }
