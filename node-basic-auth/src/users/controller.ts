@@ -71,8 +71,8 @@ async function verify(req: Express.Request, res: Express.Response, next: Express
         .status(401)
         .json({ message: "Invalid Authentication Credentials" });
     }
-  
-    res.status(200).send();
+    console.log("Verified user: ", user);
+    res.status(200).json({ auth: true });
   } catch (err) {
     console.error(err);
     next(err);

@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
+    "build": "node ./copyAssets.js && yarn tsc",
     "dev": "nodemon ./src/server.ts",
     "start": "node ./dist/server.js",
     "prod": "npm run build && npm run start"
@@ -14,9 +14,10 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "config": "^3.2.3",
+    "errorhandler": "^1.5.1",
     "express": "^4.17.1",
     "helmet": "^3.21.1",
-    "strong-error-handler": "^3.4.0"
+    "simple-node-logger": "^18.12.23"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.1",

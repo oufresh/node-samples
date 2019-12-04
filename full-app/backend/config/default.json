@@ -10,5 +10,14 @@
             "base-path": "/users",
             "protocol": "http"
         }
-    }
+    },
+    "services-base-path": "/services",
+    "services": [
+        {
+            "base-path": "/books",
+            "host": "localhost",
+            "port": 3000,
+            "protocol": "http"
+        }
+    ]
 }
