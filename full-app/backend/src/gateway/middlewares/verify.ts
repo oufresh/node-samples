@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import config from "config";
 import axios from "axios";
+import logger from "../../lib/logger";
 
 function getTokenFromHeaders(req: Request) {
   const {
@@ -44,6 +45,17 @@ function isVerified(authdata: string) {
 
 export async function verify(req: Request, res: Response, next: NextFunction) {
   try {
+    logger.info(req.path);
+    if (req.path.includes("priv")) {
+      logger.info("redirect to index");
+      res.redirect("/index.html");
+    } else next();
+  } catch (e) {
+    logger.error(e);
+  }
+}
+
+/*  try {
     const authdata = getTokenFromHeaders(req);
     console.log(authdata);
     if (authdata) {
@@ -60,8 +72,7 @@ export async function verify(req: Request, res: Response, next: NextFunction) {
     console.error(e);
     //next(next(new Error("Though lucky buddy!!"));
     res.status(401).json({ message: e.message });
-  }
-}
+  }*/
 
 /*
 try {
