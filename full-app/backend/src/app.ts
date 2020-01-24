@@ -4,6 +4,11 @@ import express, { Request, Response } from "express";
 import path from "path";
 import { apiRouter, basePath } from "./api";
 import { verify, filter } from "./gateway/middlewares";
+import cookieParser from "cookie-parser";
+import csrf from "csurf";
+import logger from "./lib/logger";
+import cheerio from "cheerio";
+import fs from "fs";
 
 // Create Express server
 const app = express();
@@ -12,7 +17,11 @@ const app = express();
 app.use(helmet());
 
 //2. Filtering internal api middleware... not get from browser
-app.use(filter);
+//app.use(filter);
+
+// parse cookies
+// we need this because "cookie" is true in csrfProtection
+app.use(cookieParser());
 
 /**
  * TODO
@@ -47,13 +56,27 @@ app.use(basePath, apiRouter);
 const frontendDir = process.env.FRONTEND
   ? process.env.FRONTEND
   : config.get<string>("frontend-directory");
+
+const csrfProtection = csrf({ cookie: true });
+app.use(csrfProtection);
 app.use(express.static(path.join(__dirname, frontendDir)));
 
 // Handle React routing, return all requests to React app (ex using login and secured pages)
-app.get("*", (req: Request, res: Response) => {
+app.get("/*", (req: Request, res: Response) => {
   //forse dovrò vedere che non si tratta di /api o /users ? no queste due vengono già intercettate dal middleware
   //vediamo se accetta text/html
-  res.sendFile(path.join(__dirname, frontendDir, "index.html"));
+  //cheerio
+  res.cookie("XSRF-TOKEN", req.csrfToken());
+  logger.info("XSRF-TOKEN " + req.csrfToken());
+  const html = fs.readFileSync(
+    __dirname + "/" + frontendDir + "/index.html",
+    "utf8"
+  );
+  const $ = cheerio.load(html);
+  const metaNode = `<meta name="csrf-token" content="${req.csrfToken()}">`;
+  $("head").append(metaNode);
+  res.send($.html());
+  //res.sendFile(path.join(__dirname, frontendDir, "index.html"));
 });
 /*
 //home on prod use the static dir with client app
