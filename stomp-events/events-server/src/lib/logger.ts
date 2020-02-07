@@ -1,5 +1,3 @@
-import Logger from "./logger";
-
 const log = require("simple-node-logger"); // eslint-disable-line @typescript-eslint/no-var-requires
 
 export interface Logger {

@@ -1,7 +1,7 @@
 import amqp from "amqplib";
 import config from "config";
 import logger from "./lib/logger";
-
+/*
 let _connection = null;
 let _channel = null;
 
@@ -42,3 +42,4 @@ export function close() {
     process.exit(0);
   }, 500);
 }
+*/
