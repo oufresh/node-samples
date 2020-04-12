@@ -1,0 +1,5 @@
+### Hello
+GET http://localhost:3000/hello
+
+### Create basket
+POST http://localhost:3000/kafka/send
