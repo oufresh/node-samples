@@ -1,0 +1,10 @@
+{
+  "port": 3000,
+  "session": {
+    "clientId": "MyVoiceIsMyPassportVerifyMe"
+  },
+  "okta": {
+    "clientId": "0oadjo6c8JNRpYkOR4x6",
+    "clientSecret": "1BOQ8jccpE2Dspqv2tthZiJdKgPCJWgHSlMXoTAK"
+  }
+}
