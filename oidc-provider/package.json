@@ -1,0 +1,29 @@
+{
+  "name": "oidc-provider",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "errorhandler": "^1.5.1",
+    "helmet": "^4.0.0",
+    "koa": "^2.13.0",
+    "koa-ejs": "^4.3.0",
+    "koa-helmet": "^5.2.0",
+    "lodash": "^4.17.19",
+    "mongodb": "^3.6.0",
+    "nanoid": "^3.1.12",
+    "oidc-provider": "^6.28.0",
+    "simple-node-logger": "^18.12.24"
+  },
+  "devDependencies": {
+    "@types/config": "^0.0.36",
+    "@types/helmet": "^0.0.47",
+    "@types/lodash": "^4.14.159",
+    "@types/mongodb": "^3.5.25",
+    "config": "^3.3.1",
+    "eslint": "^7.6.0",
+    "prettier": "^2.0.5",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  }
+}
