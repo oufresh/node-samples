@@ -6,10 +6,13 @@
   "license": "MIT",
   "scripts": {
     "build": "copyfiles src/* dist",
-    "start": "node --experimental-modules src/index.mjs"
+    "start": "node --experimental-json-modules src/index.mjs"
   },
   "devDependencies": {
     "copyfiles": "^2.4.0",
-    "eslint": "^7.14.0"
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "2.2.0"
   }
 }
