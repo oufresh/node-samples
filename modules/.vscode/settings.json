@@ -1,0 +1,7 @@
+{
+    "typescript.validate.enable": false,
+    "files.exclude": {
+        "**/node_modules": true
+    },
+    "typescript.format.enable": false
+}
