@@ -1,5 +1,5 @@
 {
-    "ext": "ts",
+    "ext": "ts, json",
     "ignore": ["src/**/*.spec.ts"],
     "watch": ["src/"],
     "execMap": {
