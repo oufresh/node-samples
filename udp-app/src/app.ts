@@ -1,25 +1,37 @@
-import server, {} from "./server";
+import udp from "./udp/udp";
 
+import { test } from "./client/client";
+
+//----- test worker client
+
+test();
 // --------------------creating a udp server --------------------
 console.log("Hello udp serverts node app!");
 
 // creating a udp server
-console.log(server);
+console.log(udp);
 console.log("Server created!");
 
-server.on("error", (err) => {
-    console.log(`server error:\n${err.stack}`);
-    server.close();
-  });
-  
-  server.on("message", (msg, rinfo) => {
-    console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
-  });
-  
-  server.on("listening", () => {
-    const address = server.address();
-    console.log(`server listening ${address.address}:${address.port}`);
-  });
-  
-  server.bind(41234);
-  // Prints: server listening 0.0
+udp.on("error", (err: Error) => {
+  console.log(`server error:\n${err.stack}`);
+  udp.close();
+});
+
+udp.on("message", (msg, rinfo) => {
+  console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+});
+
+udp.on("listening", () => {
+  const address = udp.address();
+  console.log(`server listening ${address.address}:${address.port}`);
+});
+
+udp.on("connect", () => {
+  console.log("Socket connected");
+});
+
+udp.on("close", () => {
+  console.log("Socket is closed !");
+});
+
+udp.bind(41234);
