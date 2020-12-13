@@ -1,0 +1,51 @@
+{
+  "name": "test",
+  "width": 4000,
+  "height": 2000,
+  "elements": [
+    {
+      "name": "CPAAA",
+      "top": 100,
+      "left": 200,
+      "width": 150,
+      "height": 150,
+      "geom": "rect",
+      "data": { "Kv": 1500, "type": "CP" },
+      "connections": [{ "name": "LAAABBB" }]
+    },
+    {
+      "name": "CSBBB",
+      "top": 200,
+      "left": 400,
+      "radius": 20,
+      "geom": "circle",
+      "data": { "Kv": 1500, "type": "CS" },
+      "connections": [{ "name": "LAAABBB" }, { "name": "LBBBCCC" }]
+    },
+    {
+      "name": "SEZCCC",
+      "top": 400,
+      "left": 400,
+      "radius": 10,
+      "geom": "circle",
+      "data": { "Kv": 1500, "type": "SEZ" },
+      "connections": [{ "dir": "T", "name": "LBBBCCC" }]
+    },
+    {
+      "type": "LINE",
+      "name": "LAAABBB",
+      "from": { "name": "CPAAA", "anchor": "R" },
+      "to": { "name": "CSBBB", "anchor": "L" },
+      "geom": "path",
+      "nodes": []
+    },
+    {
+      "type": "LINE",
+      "name": "LBBBCCC",
+      "geom": "path",
+      "from": { "name": "CSBBB", "anchor": "B" },
+      "to": { "name": "SEZCCC", "anchor": "T" },
+      "nodes": []
+    }
+  ]
+}
