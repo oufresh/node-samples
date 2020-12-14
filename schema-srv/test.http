@@ -1,0 +1,10 @@
+### test app
+GET http://localhost:4000/
+
+
+### test schema
+GET http://localhost:4000/schema/test
+
+
+### test schema
+GET http://localhost:4000/schema/test/elements
