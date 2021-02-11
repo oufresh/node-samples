@@ -1,0 +1,11 @@
+{
+  "dbConfig": {
+    "host": "localhost",
+    "port": 27017,
+    "dbName": "schema",
+    "user": "schemaUser",
+    "pwd":"schemaPwd",
+    "authSource": "schema"
+  },
+  "port": 4000
+}

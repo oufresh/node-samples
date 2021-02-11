@@ -1,0 +1,26 @@
+{
+  "name": "node-boilerplate",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "author": "oufresh",
+  "license": "MIT",
+  "scripts": {
+    "build": "copyfiles src/* dist",
+    "start": "node src/index.js",
+    "dev": "nodemon --config nodemon.json src/index.js",
+    "dev:debug": "nodemon --config nodemon.json --inspect-brk src/index.js"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "eslint": "^7.19.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "nodemon": "^2.0.7",
+    "prettier": "2.2.1"
+  },
+  "dependencies": {
+    "config": "^3.3.3",
+    "mongodb": "^3.6.4",
+    "simple-node-logger": "^18.12.24"
+  }
+}
