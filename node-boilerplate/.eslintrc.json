@@ -1,0 +1,17 @@
+{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "script"
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.js"]
+    }
+  ],
+  "rules": {}
+}
