@@ -6,11 +6,14 @@ import { generateAsync } from "./worker/generator.mjs";
 //console.log(foo()); // Hello foo!
 /** ***********************/
 
-console.log("Start worker!");
+
 async function test() {
+  console.log("Start worker!");
     const nums = await generateAsync();
     console.log(nums);
 }
+test();
+
 test();
 const myService = createService();
 if (myService.isSecret('My best guess')) {
