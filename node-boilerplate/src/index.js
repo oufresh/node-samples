@@ -3,15 +3,15 @@ const config = require("config");
 const logger = require("simple-node-logger").createSimpleLogger();
 const createService  = require("./service/service.js");
 const generateAsync = require( "./worker/generator.js");
-const { connect, close} = require("./db/db.js");
+//const { connect, close} = require("./db/db.js");
 
 
-
+/*
 logger.info(config);
 
 const service = createService();
 service.isSecret("ciao");
-
+*/
 
 /*
 logger.info("Start worker with thrn/catch");
@@ -25,16 +25,18 @@ async function test() {
     logger.info(nums);
 }
 test();
+console.log("Start worker with async await 2");
+test();
 
 //top level await not yet supported, use then / catch
-connect()
+/*connect()
   .then(() => {
     logger.info("Connection to db ok!");
     close();
   })  .catch((e) => {
     logger.error();(e);
     close();
-  });
+  });*/
 /*
 
 //rest fframework express
