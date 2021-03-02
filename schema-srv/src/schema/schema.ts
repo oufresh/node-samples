@@ -14,6 +14,25 @@ schemaRouter.get("/about", function (req, res) {
   res.send("About schema");
 });
 
+schemaRouter.get("/all", async (req: Request, res: Response) => {
+  try {
+    const cursor = getCollection("schemas").find();
+    const schemas = [];
+    if ((await cursor.count()) === 0) {
+      console.log("No documents found!");
+      res.send(schemas);
+    } else {
+      await cursor.forEach((iterator) => {
+        schemas.push(iterator);
+      });
+    }
+    res.send(schemas);
+  } catch (e) {
+    console.error(e);
+    res.sendStatus(500);
+  }
+});
+
 schemaRouter.get("/:schemaName", async (req: Request, res: Response) => {
   //console.log(req.params);
   const n = req.params.schemaName;
@@ -29,6 +48,8 @@ schemaRouter.get("/:schemaName", async (req: Request, res: Response) => {
     }
   } else res.sendStatus(400);
 });
+
+
 
 schemaRouter.get(
   "/:schemaName/elements",

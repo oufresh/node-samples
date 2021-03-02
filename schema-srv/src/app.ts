@@ -13,7 +13,8 @@ connect()
   .then(() => {
     console.log("Connection to db ok!");
     app.use("/schema", schemaRouter);
-    app.get("/", (req: Request, res: Response) => res.send("Schema app: " + Date.now()));
+    app.get("/pippo/test", (req: Request, res: Response) => res.send("Schema app: " + Date.now()));
+    app.use(express.static('public'));
     
     process.on('SIGINT', handleExit);
     process.on('SIGQUIT', handleExit);
