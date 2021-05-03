@@ -26,15 +26,9 @@ module.exports = {
     logger.info("Connected successfully to server");
     logger.info("Connect to database " + dbName);
     db = client.db(dbName);
-    return db;
   },
   isConnected: function () {
-    const c = client.isConnected();
-    /*_db.command({ping: 1}).then(()=>{
-
-  }).catch(e=>{});*/
-
-    return c;
+    return client.isConnected();
   },
   close: async function () {
     logger.info("Close db connection");
