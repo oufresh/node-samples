@@ -1,4 +1,4 @@
-import { Logger } from "./lb.mjs";
+import { Logger } from "./lb.js";
 
 export function createLogger(name) {
     const logger = new Logger(name);

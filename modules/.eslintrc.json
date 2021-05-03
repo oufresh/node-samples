@@ -10,7 +10,7 @@
   },
   "overrides": [
     {
-      "files": ["src/**/*.mjs"]
+      "files": ["src/**/*.js"]
     }
   ],
   "rules": {}

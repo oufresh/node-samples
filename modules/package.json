@@ -1,12 +1,12 @@
 {
   "name": "modules",
   "version": "1.0.0",
-  "main": "dist/index.mjs",
   "author": "oufresh",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "build": "copyfiles src/* dist",
-    "start": "node --experimental-json-modules src/index.mjs"
+    "start": "node index.js"
   },
   "devDependencies": {
     "copyfiles": "^2.4.0",

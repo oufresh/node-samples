@@ -12,16 +12,16 @@ export const generateAsync = () => {
     return new Promise((resolve, reject) => {
       const input = randomArray(100, 200);
       // run thread and pass info
-      const worker = new Worker("./src/worker/sort.executor.mjs", {
+      const worker = new Worker("./src/worker/sort.executor.js", {
         workerData: { value: input },
       });
       worker.on("message", (result) => {
         //console.log(result);
         resolve(result);
       });
-      worker.on("error", () => {
+      worker.on("error", (e) => {
         console.error("Error on worker");
-        reject();
+        reject(e);
 
       });
       worker.on("exit", (code) => {
